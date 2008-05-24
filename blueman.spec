@@ -44,7 +44,8 @@ Features:
 %setup -q -n %{name}_%{version}
 
 %build
-%{__sed} -e 's,lib/,%{_lib}/,g' setup.py
+%{__sed} -i -e 's,lib/,%{_lib}/,g' setup.py
+%{__sed} -i -e 's,lib/,%{_lib}/,g' sys/org.blueman.Mechanism.service
 %{__python} setup.py build
 
 %install
