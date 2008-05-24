@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 #%dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/network.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/org.blueman.Mechanism.conf
-%attr(755,root,root) %{_prefix}/lib/%{name}
+%attr(755,root,root) %{_libdir}/%{name}
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
