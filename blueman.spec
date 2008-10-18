@@ -1,11 +1,12 @@
+%define		rev	106
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	0.5
-Release:	5
+Version:	0.6
+Release:	0.%{rev}.1
 License:	GPL
 Group:		Applications
-Source0:	http://download.tuxfamily.org/blueman/%{name}_%{version}.tar.gz
-# Source0-md5:	f66861ce1d3c2162dc6682c0b67b8397
+Source0:	http://download.tuxfamily.org/blueman/tarballs/%{name}-%{version}-r%{rev}.tar.gz
+# Source0-md5:	0dd95fd39523b938cbe125bd21cf4934
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gnome-bluetooth-devel
@@ -41,7 +42,7 @@ Features:
   serial devices
 
 %prep
-%setup -q -n %{name}_%{version}
+%setup -q -n %{name}
 
 %build
 %{__sed} -i -e 's,lib/,%{_lib}/,g' setup.py
@@ -69,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
-%{_iconsdir}/hicolor/scalable/apps/*.svg
+%{_iconsdir}/hicolor/scalable/*/*.svg
 %{_iconsdir}/hicolor/*/apps/*.png
 %{_datadir}/PolicyKit/policy/org.blueman.policy
 %{_desktopdir}/blueman.desktop
