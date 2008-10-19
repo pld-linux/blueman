@@ -9,7 +9,9 @@ Source0:	http://download.tuxfamily.org/blueman/tarballs/%{name}-%{version}-r%{re
 # Source0-md5:	0dd95fd39523b938cbe125bd21cf4934
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
+BuildRequires:	gettext-devel
 BuildRequires:	gnome-bluetooth-devel
+BuildRequires:	intltool
 BuildRequires:	python-Pyrex
 BuildRequires:	python-devel
 BuildRequires:	python-devel >= 2.5
