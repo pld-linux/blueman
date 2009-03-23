@@ -18,8 +18,8 @@ BuildRequires:	python-devel >= 2.5
 BuildRequires:	python-distutils-extra
 BuildRequires:	python-pynotify
 BuildRequires:	rpm-pythonprov
-Requires:	bluez-libs >= 2.20
-Requires:	bluez-utils
+Requires:	bluez-libs >= 4.25
+Requires:	bluez-utils >= 4.25
 Requires:	gtk+2 >= 2.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
