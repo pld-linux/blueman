@@ -21,6 +21,11 @@ BuildRequires:	rpm-pythonprov
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
 Requires:	gtk+2 >= 2.12
+%pyrequires_eq	python = %py_ver
+Requires:	python-bluetooth
+Requires:	python-dbus
+Requires:	python-pygtk-gtk
+Requires:	python-pynotify
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,7 +61,7 @@ Features:
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-        DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name} --with-gnome
 
