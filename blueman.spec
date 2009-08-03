@@ -1,12 +1,12 @@
 %define		rev	106
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	1.02
+Version:	1.10
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
-# Source0-md5:	7f66f569a716f8c6fce9360176166eac
+# Source0-md5:	f9058305c42038678d5023fcabba22a4
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gettext-devel
@@ -16,7 +16,7 @@ BuildRequires:	python-Pyrex
 BuildRequires:	python-dbus-devel
 BuildRequires:	python-devel >= 2.5
 BuildRequires:	python-distutils-extra
-BuildRequires:	python-pynotify
+BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
