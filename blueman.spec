@@ -12,13 +12,13 @@ BuildRequires:	bluez-libs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-bluetooth-devel
 BuildRequires:	intltool
+BuildRequires:	pkgconfig
 BuildRequires:	python-Pyrex
 BuildRequires:	python-dbus-devel
 BuildRequires:	python-devel >= 2.5
 BuildRequires:	python-distutils-extra
 BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	sed
 BuildRequires:	startup-notification-devel
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
