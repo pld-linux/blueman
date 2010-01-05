@@ -1,12 +1,12 @@
 %define		rev	106
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	1.10
+Version:	1.21
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
-# Source0-md5:	f9058305c42038678d5023fcabba22a4
+# Source0-md5:	26b70341b3d3da28da62c917c8b20377
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gettext-devel
@@ -18,6 +18,8 @@ BuildRequires:	python-devel >= 2.5
 BuildRequires:	python-distutils-extra
 BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
+BuildRequires:	sed
+BuildRequires:	startup-notification-devel
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
 Requires:	gtk+2 >= 2.12
@@ -54,6 +56,8 @@ Features:
 
 %build
 %configure
+# enable default path for fdi installation
+sed -i -e s/#hal_fdi/hal_fdi/g data/configs/Makefile
 #--with-dhcp-config=PATH
 %{__make}
 
@@ -78,7 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_iconsdir}/hicolor/*/apps/*.png
-%{_datadir}/PolicyKit/policy/org.blueman.policy
+%{_datadir}/polkit-1/actions/org.blueman.policy
 %{_desktopdir}/blueman-manager.desktop
 %{py_sitedir}/*.so
 %{py_sitedir}/*.a
