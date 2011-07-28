@@ -2,7 +2,7 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	1.21
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications
 Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
@@ -57,10 +57,9 @@ Features:
 %setup -q
 
 %build
-%configure
-# enable default path for fdi installation
-sed -i -e s/#hal_fdi/hal_fdi/g data/configs/Makefile
-#--with-dhcp-config=PATH
+%configure \
+	--disable-hal
+
 %{__make}
 
 %install
@@ -98,5 +97,4 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
 %{_mandir}/man1/*.1*
 %{_datadir}/dbus-1/services/blueman-applet.service
-%{_datadir}/hal/fdi/information/20thirdparty/11-blueman-bnep.fdi
 %{py_sitescriptdir}/%{name}
