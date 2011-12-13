@@ -1,12 +1,16 @@
-%define		rev	106
+# TODO
+# unpackaged
+#   /usr/lib/nautilus-sendto/plugins/libnstblueman.a
+#   /usr/lib/nautilus-sendto/plugins/libnstblueman.la
+#   /usr/lib/nautilus-sendto/plugins/libnstblueman.so
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	1.21
-Release:	8
+Version:	1.23
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
-# Source0-md5:	26b70341b3d3da28da62c917c8b20377
+# Source0-md5:	f0bee59589f4c23e35bf08c2ef8acaef
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gettext-devel
