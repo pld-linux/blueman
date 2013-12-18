@@ -6,17 +6,19 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	1.23
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
 # Source0-md5:	f0bee59589f4c23e35bf08c2ef8acaef
-Patch0:		%{name}-statusicon.patch
+Patch0:		missing-icons.patch
+Patch1:		icon-active.patch
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-bluetooth-devel
 BuildRequires:	intltool
+BuildRequires:	librsvg
 BuildRequires:	pkgconfig
 BuildRequires:	python-Pyrex
 BuildRequires:	python-dbus-devel
@@ -61,6 +63,7 @@ Features:
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -73,6 +76,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+for s in 16 32 48 ; do
+	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status
+	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray.png \
+		data/icons/hicolor/scalable/status/blueman-tray.svg
+	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray-active.png \
+		data/icons/hicolor/scalable/status/blueman-tray-active.svg
+	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray-disabled.png \
+		data/icons/hicolor/scalable/status/blueman-tray-disabled.svg
+done
+install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/status
+install data/icons/hicolor/scalable/status/*.svg $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/status
 
 %find_lang %{name} --with-gnome
 
@@ -94,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
 %{_iconsdir}/hicolor/scalable/*/*.svg
-%{_iconsdir}/hicolor/*/apps/*.png
+%{_iconsdir}/hicolor/*/*/*.png
 %{_datadir}/polkit-1/actions/org.blueman.policy
 %{_desktopdir}/blueman-manager.desktop
 %{py_sitedir}/*.so
