@@ -15,7 +15,7 @@ Patch0:		missing-icons.patch
 Patch1:		icon-active.patch
 URL:		http://blueman.tuxfamily.org/
 BuildRequires:	bluez-libs-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gnome-bluetooth-devel
 BuildRequires:	intltool
 BuildRequires:	librsvg
