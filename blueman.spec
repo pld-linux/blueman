@@ -16,18 +16,14 @@ BuildRequires:	automake
 BuildRequires:	bluez-libs-devel >= 4.61
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.32
-BuildRequires:	gnome-bluetooth-devel
 BuildRequires:	intltool >= 0.35.0
-BuildRequires:	librsvg
-BuildRequires:	perl >= 5.8.1
+BuildRequires:	libtool
 BuildRequires:	pkgconfig >= 0.9.0
 BuildRequires:	python-Cython
-BuildRequires:	python-dbus-devel
+BuildRequires:	python-dbus
 BuildRequires:	python-devel >= 2.7
 BuildRequires:	python-pygobject3-common-devel
-BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	startup-notification-devel >= 0.9
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	bluez-libs >= 4.25
@@ -88,7 +84,6 @@ export NOCONFIGURE='yes' && ./autogen.sh \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
