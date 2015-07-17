@@ -20,6 +20,7 @@ BuildRequires:	pkgconfig >= 0.9.0
 BuildRequires:	python-Cython
 BuildRequires:	python-dbus-devel
 BuildRequires:	python-devel >= 2.7
+BuildRequires:	python-pygobject3-common-devel
 BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	startup-notification-devel >= 0.9
