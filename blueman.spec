@@ -1,7 +1,11 @@
+# uninstalled:
+# /usr/share/polkit-1/actions/org.blueman.policy
+# missing:
+# %{_datadir}/dbus-1/services/org.blueman.Applet.service
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	2.0
-Release:	1
+Release:	0.1
 License:	GPL
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -122,7 +126,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_desktopdir}/blueman-adapters.desktop
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
 %{_mandir}/man1/*.1*
-%{_datadir}/dbus-1/services/org.blueman.Applet.service
+#%{_datadir}/dbus-1/services/org.blueman.Applet.service
 %{py_sitescriptdir}/%{name}
 %dir %{_pixmapsdir}/blueman
 %{_pixmapsdir}/blueman/blueman-*.png
