@@ -1,38 +1,35 @@
-# TODO
-# unpackaged
-#   /usr/lib/nautilus-sendto/plugins/libnstblueman.a
-#   /usr/lib/nautilus-sendto/plugins/libnstblueman.la
-#   /usr/lib/nautilus-sendto/plugins/libnstblueman.so
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	1.23
-Release:	3
+Version:	2.0
+Release:	1
 License:	GPL
-Group:		Applications
-Source0:	http://download.tuxfamily.org/blueman/%{name}-%{version}.tar.gz
-# Source0-md5:	f0bee59589f4c23e35bf08c2ef8acaef
-Patch0:		missing-icons.patch
-Patch1:		icon-active.patch
-URL:		http://blueman.tuxfamily.org/
-BuildRequires:	bluez-libs-devel
+Group:		X11/Applications
+Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	d95270145475ce41a33bf7390afe3428
+URL:		https://github.com/blueman-project/blueman
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	bluez-libs-devel >= 4.61
 BuildRequires:	gettext-tools
+BuildRequires:	glib2-devel >= 2.32
 BuildRequires:	gnome-bluetooth-devel
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.35.0
 BuildRequires:	librsvg
-BuildRequires:	pkgconfig
-BuildRequires:	python-Pyrex
+BuildRequires:	perl >= 5.8.1
+BuildRequires:	pkgconfig >= 0.9.0
+BuildRequires:	python-Cython
 BuildRequires:	python-dbus-devel
-BuildRequires:	python-devel >= 2.5
-BuildRequires:	python-distutils-extra
+BuildRequires:	python-devel >= 2.7
 BuildRequires:	python-pynotify-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	startup-notification-devel
+BuildRequires:	startup-notification-devel >= 0.9
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
-Requires:	gtk+2 >= 2.12
-%pyrequires_eq	python = %py_ver
+Requires:	gtk+3-devel >= 3.12
+Requires:	python >= %py_ver
+Requires:	python-appindicator-gtk2
 Requires:	python-bluetooth
 Requires:	python-dbus
 Requires:	python-pygtk-gtk
@@ -60,14 +57,27 @@ Features:
 - Connect and receive connections from: audio, network, input and
   serial devices
 
+%package thunar
+Summary:	Blueman plugin for Thunar
+Summary(pl.UTF-8):	Wtyczka Blueman-a dla Thunar-a
+Group:		X11/Applications
+
+%description thunar
+Blueman plugin for Thunar.
+
+%description thunar -l pl.UTF-8
+Wtyczka Blueman-a dla Thunar-a.
+
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
+export NOCONFIGURE='yes' && ./autogen.sh \
+	--enable-xfce-settings=yes \
+	--no-configure
 %configure \
-	--disable-hal
+	--disable-schemas-compile \
+
 
 %{__make}
 
@@ -77,17 +87,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-for s in 16 32 48 ; do
-	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status
-	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray.png \
-		data/icons/hicolor/scalable/status/blueman-tray.svg
-	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray-active.png \
-		data/icons/hicolor/scalable/status/blueman-tray-active.svg
-	rsvg-convert -w $s -h $s -o $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${s}x${s}/status/blueman-tray-disabled.png \
-		data/icons/hicolor/scalable/status/blueman-tray-disabled.svg
-done
-install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/status
-install data/icons/hicolor/scalable/status/*.svg $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/status
 
 %find_lang %{name} --with-gnome
 
@@ -96,13 +95,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_icon_cache hicolor
+libtool --finish %{py_sitedir}
+glib-compile-schemas %{_datadir}/glib-2.0/schemas
 
 %postun
 %update_icon_cache hicolor
+glib-compile-schemas %{_datadir}/glib-2.0/schemas
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README
+%doc README.md CHANGELOG.md COPYING FAQ
 %config(noreplace) %verify(not md5 mtime size) /etc/dbus-1/system.d/org.blueman.Mechanism.conf
 %attr(755,root,root) %{_libdir}/%{name}-mechanism
 %attr(755,root,root) %{_bindir}/*
@@ -110,12 +112,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_iconsdir}/hicolor/*/*/*.png
-%{_datadir}/polkit-1/actions/org.blueman.policy
+%{_libdir}/blueman-rfcomm-watcher
+%{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
 %{_desktopdir}/blueman-manager.desktop
 %{py_sitedir}/*.so
 %{py_sitedir}/*.a
 %{py_sitedir}/*.la
+%{_desktopdir}/blueman-adapters.desktop
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
 %{_mandir}/man1/*.1*
-%{_datadir}/dbus-1/services/blueman-applet.service
+%{_datadir}/dbus-1/services/org.blueman.Applet.service
 %{py_sitescriptdir}/%{name}
+%dir %{_pixmapsdir}/blueman
+%{_pixmapsdir}/blueman/blueman-*.png
+%dir %{_docdir}/blueman
+%{_docdir}/blueman/*
+
+%files thunar
+%defattr(644,root,root,755)
+%{_datadir}/Thunar/sendto/thunar-sendto-blueman.desktop
