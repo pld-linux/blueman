@@ -1,7 +1,7 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	2.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -12,6 +12,7 @@ BuildRequires:	automake
 BuildRequires:	bluez-libs-devel >= 4.61
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.32
+BuildRequires:	gtk+3-devel >= 3.12
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig >= 0.9.0
@@ -24,7 +25,7 @@ Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	bluez-libs >= 4.25
 Requires:	bluez-utils >= 4.25
-Requires:	gtk+3-devel >= 3.12
+Requires:	gtk+3 >= 3.12
 Requires:	python >= %py_ver
 Requires:	python-appindicator-gtk2
 Requires:	python-bluetooth
@@ -75,14 +76,12 @@ export NOCONFIGURE='yes' && ./autogen.sh \
 %configure \
 	--disable-schemas-compile \
 
-
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
 
 %find_lang %{name} --with-gnome
 
