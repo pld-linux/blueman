@@ -110,8 +110,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
 %{_desktopdir}/blueman-manager.desktop
 %{py_sitedir}/*.so
-%{py_sitedir}/*.a
-%{py_sitedir}/*.la
 %{_desktopdir}/blueman-adapters.desktop
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
 %{_mandir}/man1/*.1*
