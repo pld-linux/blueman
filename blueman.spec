@@ -71,9 +71,9 @@ Wtyczka Blueman-a dla Thunar-a.
 
 %build
 export NOCONFIGURE='yes' && ./autogen.sh \
-	--enable-xfce-settings=yes \
 	--no-configure
 %configure \
+	--enable-xfce-settings=yes \
 	--disable-static \
 	--disable-schemas-compile \
 
