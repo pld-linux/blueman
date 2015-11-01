@@ -74,6 +74,7 @@ export NOCONFIGURE='yes' && ./autogen.sh \
 	--enable-xfce-settings=yes \
 	--no-configure
 %configure \
+	--disable-static \
 	--disable-schemas-compile \
 
 %{__make}
@@ -82,6 +83,9 @@ export NOCONFIGURE='yes' && ./autogen.sh \
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/_blueman.la
 
 %find_lang %{name} --with-gnome
 
@@ -117,7 +121,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{py_sitescriptdir}/%{name}
 %dir %{_pixmapsdir}/blueman
 %{_pixmapsdir}/blueman/blueman-*.png
-%dir %{_docdir}/blueman
 %{_datadir}/polkit-1/actions/org.blueman.policy
 
 %files thunar
