@@ -90,7 +90,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_icon_cache hicolor
-libtool --finish %{py_sitedir}
 glib-compile-schemas %{_datadir}/glib-2.0/schemas
 
 %postun
