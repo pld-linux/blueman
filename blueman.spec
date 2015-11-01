@@ -118,7 +118,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %dir %{_pixmapsdir}/blueman
 %{_pixmapsdir}/blueman/blueman-*.png
 %dir %{_docdir}/blueman
-%{_docdir}/blueman/*
 %{_datadir}/polkit-1/actions/org.blueman.policy
 
 %files thunar
