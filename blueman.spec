@@ -21,6 +21,7 @@ BuildRequires:	python-dbus
 BuildRequires:	python-devel >= 2.7
 BuildRequires:	python-pygobject3-common-devel
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.219
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	bluez-libs >= 4.25
@@ -91,6 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/_blueman.la
 
+%py_postclean
 %find_lang %{name} --with-gnome
 
 %clean
