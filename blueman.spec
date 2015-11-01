@@ -104,24 +104,38 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md COPYING FAQ
 %config(noreplace) %verify(not md5 mtime size) /etc/dbus-1/system.d/org.blueman.Mechanism.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
+%attr(755,root,root) %{_bindir}/blueman-adapters
+%attr(755,root,root) %{_bindir}/blueman-applet
+%attr(755,root,root) %{_bindir}/blueman-assistant
+%attr(755,root,root) %{_bindir}/blueman-browse
+%attr(755,root,root) %{_bindir}/blueman-manager
+%attr(755,root,root) %{_bindir}/blueman-report
+%attr(755,root,root) %{_bindir}/blueman-sendto
+%attr(755,root,root) %{_bindir}/blueman-services
+%{_mandir}/man1/blueman-adapters.1*
+%{_mandir}/man1/blueman-applet.1*
+%{_mandir}/man1/blueman-assistant.1*
+%{_mandir}/man1/blueman-browse.1*
+%{_mandir}/man1/blueman-manager.1*
+%{_mandir}/man1/blueman-report.1
+%{_mandir}/man1/blueman-sendto.1*
+%{_mandir}/man1/blueman-services.1*
 %attr(755,root,root) %{_libdir}/%{name}-mechanism
-%attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
+%{_desktopdir}/blueman-manager.desktop
+%{_desktopdir}/blueman-adapters.desktop
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_iconsdir}/hicolor/*/*/*.png
-%{_libdir}/blueman-rfcomm-watcher
-%{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
-%{_desktopdir}/blueman-manager.desktop
-%{py_sitedir}/*.so
-%{_desktopdir}/blueman-adapters.desktop
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
-%{_mandir}/man1/*.1*
-%{_datadir}/dbus-1/services/blueman-applet.service
-%{py_sitescriptdir}/%{name}
 %dir %{_pixmapsdir}/blueman
 %{_pixmapsdir}/blueman/blueman-*.png
+%{_libdir}/blueman-rfcomm-watcher
+%{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
+%{_datadir}/dbus-1/services/blueman-applet.service
 %{_datadir}/polkit-1/actions/org.blueman.policy
+%attr(755,root,root) %{py_sitedir}/_blueman.so
+%{py_sitescriptdir}/%{name}
 
 %files thunar
 %defattr(644,root,root,755)
