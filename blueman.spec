@@ -122,6 +122,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_mandir}/man1/blueman-sendto.1*
 %{_mandir}/man1/blueman-services.1*
 %attr(755,root,root) %{_libdir}/%{name}-mechanism
+%attr(755,root,root) %{_libdir}/%{name}-rfcomm-watcher
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
 %{_desktopdir}/blueman-manager.desktop
@@ -130,7 +131,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_iconsdir}/hicolor/*/*/*.png
 %dir %{_pixmapsdir}/blueman
 %{_pixmapsdir}/blueman/blueman-*.png
-%{_libdir}/blueman-rfcomm-watcher
 %{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
 %{_datadir}/dbus-1/services/blueman-applet.service
 %{_datadir}/polkit-1/actions/org.blueman.policy
