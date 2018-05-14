@@ -1,11 +1,11 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	2.0
-Release:	2
+Version:	2.0.5
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	d95270145475ce41a33bf7390afe3428
+# Source0-md5:	677afd610bd893745ee5ae506bede2dd
 URL:		https://github.com/blueman-project/blueman
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -71,12 +71,6 @@ Wtyczka Blueman-a dla Thunar-a.
 %setup -q
 
 %build
-%{__aclocal}
-%{__autoheader}
-%{__libtoolize}
-%{__intltoolize}
-%{__automake}
-%{__autoconf}
 %configure \
 	--enable-xfce-settings=yes \
 	--disable-static \
@@ -92,7 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/_blueman.la
 
-%py_postclean
+# DO NOT RUN py_postclean - breaks plugins and everything
+
 %find_lang %{name} --with-gnome
 
 %clean
@@ -127,8 +122,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_mandir}/man1/blueman-report.1
 %{_mandir}/man1/blueman-sendto.1*
 %{_mandir}/man1/blueman-services.1*
-%attr(755,root,root) %{_libdir}/%{name}-mechanism
-%attr(755,root,root) %{_libdir}/%{name}-rfcomm-watcher
+%attr(755,root,root) %{_libexecdir}/%{name}-mechanism
+%attr(755,root,root) %{_libexecdir}/%{name}-rfcomm-watcher
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/system-services/org.blueman.Mechanism.service
 %{_desktopdir}/blueman-manager.desktop
