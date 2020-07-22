@@ -115,6 +115,7 @@ Wtyczka Blueman-a dla Thunar-a.
 
 %build
 %configure \
+	NETWORKTOOLS=/sbin/ip \
 	--disable-static \
 	--disable-schemas-compile \
 	--enable-polkit \
