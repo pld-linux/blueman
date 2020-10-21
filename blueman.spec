@@ -13,33 +13,35 @@ Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	b341822c8362bf9619fbbc22c957b00c
 URL:		https://github.com/blueman-project/blueman
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	bluez-libs-devel >= 5.0
 %{?with_mate:BuildRequires:	caja-python-devel}
 %{?with_cinnamon:BuildRequires:	cinnamon-nemo-python-devel}
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 2.32
+BuildRequires:	glib2-devel >= 1:2.32
 BuildRequires:	gtk+3-devel >= 3.12
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libtool
 %{?with_gnome:BuildRequires:	nautilus-python-devel}
-BuildRequires:	pkgconfig >= 0.9.0
-BuildRequires:	python-Cython
-BuildRequires:	python-devel >= 3.3
+BuildRequires:	pkgconfig >= 1:0.9.0
+BuildRequires:	polkit-devel
 BuildRequires:	python-pygobject3-common-devel >= 3.27.2
+BuildRequires:	python3-Cython
+BuildRequires:	python3-devel >= 3.3
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.527
+BuildRequires:	systemd-units
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun,postun):	systemd-units >= 38
 Requires:	bluez-libs >= 5.0
 Requires:	bluez-utils >= 5.0
+Requires:	glib2 >= 1:2.32
 Requires:	gtk+3 >= 3.12
-Requires:	python >= %py_ver
-Requires:	python-appindicator-gtk2
-Requires:	python-bluetooth
-Requires:	python-pygtk-gtk
+Requires:	python3 >= %py3_ver
+Requires:	python3-pygobject3 >= 3.27.2
+Suggests:	libappindicator-gtk3
 Suggests:	pulseaudio-bluetooth
 Suggests:	pulseaudio-hal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -121,6 +123,7 @@ Wtyczka Blueman-a dla Thunar-a.
 
 %build
 %configure \
+	CYTHONEXEC=/usr/bin/cython3 \
 	NETWORKTOOLS=/sbin/ip \
 	--disable-static \
 	--disable-schemas-compile \
