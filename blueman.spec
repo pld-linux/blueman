@@ -1,3 +1,9 @@
+# Conditional build:
+%bcond_without	cinnamon	# build without nemo support
+%bcond_without	gnome		# build without nautilus support
+%bcond_without	mate		# build without caja support
+%bcond_without	xfce		# build without Thunar support
+
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	2.1.3
@@ -10,20 +16,20 @@ URL:		https://github.com/blueman-project/blueman
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bluez-libs-devel >= 5.0
-BuildRequires:	caja-python-devel
-BuildRequires:	cinnamon-nemo-python-devel
+%{?with_mate:BuildRequires:	caja-python-devel}
+%{?with_cinnamon:BuildRequires:	cinnamon-nemo-python-devel}
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.32
 BuildRequires:	gtk+3-devel >= 3.12
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libtool
-BuildRequires:	nautilus-python-devel
+%{?with_gnome:BuildRequires:	nautilus-python-devel}
 BuildRequires:	pkgconfig >= 0.9.0
 BuildRequires:	python-Cython
 BuildRequires:	python-devel >= 3.3
 BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.527
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun,postun):	systemd-units >= 38
@@ -119,10 +125,10 @@ Wtyczka Blueman-a dla Thunar-a.
 	--disable-static \
 	--disable-schemas-compile \
 	--enable-polkit \
-	--enable-caja-sendto \
-	--enable-nemo-sendto \
-	--enable-nautilus-sendto \
-	--enable-thunar-sendto \
+	%{__enable_disable mate caja-sendto} \
+	%{__enable_disable cinnamon nemo-sendto} \
+	%{__enable_disable gnome nautilus-sendto} \
+	%{__enable_disable xfce thunar-sendto} \
 	--enable-settings-integration
 
 %{__make}
@@ -199,18 +205,26 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %attr(755,root,root) %{_libdir}/python3.8/site-packages/_blueman.so
 %{_libdir}/python3.8/site-packages/%{name}
 
+%if %{with mate}
 %files caja
 %defattr(644,root,root,755)
 %{_datadir}/caja-python/extensions/caja_blueman_sendto.py
+%endif
 
+%if %{with gnome}
 %files nautilus
 %defattr(644,root,root,755)
 %{_datadir}/nautilus-python/extensions/nautilus_blueman_sendto.py
+%endif
 
+%if %{with cinnamon}
 %files nemo
 %defattr(644,root,root,755)
 %{_datadir}/nemo-python/extensions/nemo_blueman_sendto.py
+%endif
 
+%if %{with xfce}
 %files thunar
 %defattr(644,root,root,755)
 %{_datadir}/Thunar/sendto/thunar-sendto-blueman.desktop
+%endif
