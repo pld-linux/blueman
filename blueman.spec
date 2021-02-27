@@ -142,7 +142,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/python3.8/site-packages/_blueman.la
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/_blueman.la
 
 # DO NOT RUN py_postclean - breaks plugins and everything
 
@@ -205,8 +205,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/org.blueman.Applet.service
 %{_datadir}/polkit-1/actions/org.blueman.policy
 %{_datadir}/polkit-1/rules.d/blueman.rules
-%attr(755,root,root) %{_libdir}/python3.8/site-packages/_blueman.so
-%{_libdir}/python3.8/site-packages/%{name}
+%attr(755,root,root) %{py3_sitedir}/_blueman.so
+%{py3_sitedir}/%{name}
 
 %if %{with mate}
 %files caja
