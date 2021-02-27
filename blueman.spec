@@ -30,7 +30,7 @@ BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	python3-Cython
 BuildRequires:	python3-devel >= 1:3.3
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.527
+BuildRequires:	rpmbuild(macros) >= 1.644
 BuildRequires:	systemd-units
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
