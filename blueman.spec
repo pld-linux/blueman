@@ -28,7 +28,7 @@ BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	polkit-devel
 BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	python3-Cython
-BuildRequires:	python3-devel >= 3.3
+BuildRequires:	python3-devel >= 1:3.3
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	systemd-units
