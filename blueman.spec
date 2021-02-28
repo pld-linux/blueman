@@ -7,7 +7,7 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	2.1.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
