@@ -6,29 +6,25 @@
 
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
-Version:	2.1.4
-Release:	2
-License:	GPL
+Version:	2.2.1
+Release:	1
+License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	e0e4703ace8cc6ed31c5a099cfaf091d
+# Source0-md5:	3f2ef360082974cf900a126ce1363b91
 URL:		https://github.com/blueman-project/blueman
-BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake
-BuildRequires:	bluez-libs-devel >= 5.0
+BuildRequires:	bluez-libs-devel >= 5.48
 %{?with_mate:BuildRequires:	caja-python-devel}
 %{?with_cinnamon:BuildRequires:	cinnamon-nemo-python-devel}
-BuildRequires:	gettext-tools
+BuildRequires:	gettext-tools >= 0.19.7
 BuildRequires:	glib2-devel >= 1:2.32
-BuildRequires:	gtk+3-devel >= 3.12
-BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libtool
 %{?with_gnome:BuildRequires:	nautilus-python-devel}
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	polkit-devel
 BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	python3-Cython
-BuildRequires:	python3-devel >= 1:3.3
+BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.644
 BuildRequires:	systemd-units
@@ -37,12 +33,16 @@ BuildRequires:	xz
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun,postun):	systemd-units >= 38
-Requires:	bluez-libs >= 5.0
-Requires:	bluez-utils >= 5.0
+Requires:	bluez >= 5.48
+Requires:	dbus >= 1.9.18
 Requires:	glib2 >= 1:2.32
-Requires:	gtk+3 >= 3.12
+Requires:	gtk+3 >= 3.22
+Requires:	pango
 Requires:	python3 >= %py3_ver
+Requires:	python3-pycairo
 Requires:	python3-pygobject3 >= 3.27.2
+Suggests:	NetworkManager-libs
+Suggests:	iproute2
 Suggests:	libappindicator-gtk3
 Suggests:	pulseaudio-bluetooth
 Suggests:	pulseaudio-hal
@@ -127,8 +127,9 @@ Wtyczka Blueman-a dla Thunar-a.
 %configure \
 	CYTHONEXEC=/usr/bin/cython3 \
 	NETWORKTOOLS=/sbin/ip \
-	--disable-static \
+	--disable-runtime-deps-check \
 	--disable-schemas-compile \
+	--disable-static \
 	--enable-polkit \
 	%{__enable_disable mate caja-sendto} \
 	%{__enable_disable cinnamon nemo-sendto} \
@@ -173,21 +174,16 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md COPYING FAQ
-%config(noreplace) %verify(not md5 mtime size) /etc/dbus-1/system.d/org.blueman.Mechanism.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/autostart/blueman.desktop
 %attr(755,root,root) %{_bindir}/blueman-adapters
 %attr(755,root,root) %{_bindir}/blueman-applet
-%attr(755,root,root) %{_bindir}/blueman-assistant
 %attr(755,root,root) %{_bindir}/blueman-manager
-%attr(755,root,root) %{_bindir}/blueman-report
 %attr(755,root,root) %{_bindir}/blueman-sendto
 %attr(755,root,root) %{_bindir}/blueman-services
 %attr(755,root,root) %{_bindir}/blueman-tray
 %{_mandir}/man1/blueman-adapters.1*
 %{_mandir}/man1/blueman-applet.1*
-%{_mandir}/man1/blueman-assistant.1*
 %{_mandir}/man1/blueman-manager.1*
-%{_mandir}/man1/blueman-report.1
 %{_mandir}/man1/blueman-sendto.1*
 %{_mandir}/man1/blueman-services.1*
 %{_mandir}/man1/blueman-tray.1*
@@ -199,12 +195,13 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %{_desktopdir}/blueman-adapters.desktop
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_iconsdir}/hicolor/*/*/*.png
-%dir %{_pixmapsdir}/blueman
-%{_pixmapsdir}/blueman/blueman-*.png
 %{_datadir}/glib-2.0/schemas/org.blueman.gschema.xml
 %{systemdunitdir}/blueman-mechanism.service
 %{systemduserunitdir}/blueman-applet.service
+%{systemduserunitdir}/blueman-manager.service
 %{_datadir}/dbus-1/services/org.blueman.Applet.service
+%{_datadir}/dbus-1/services/org.blueman.Manager.service
+%{_datadir}/dbus-1/system.d/org.blueman.Mechanism.conf
 %{_datadir}/polkit-1/actions/org.blueman.policy
 %{_datadir}/polkit-1/rules.d/blueman.rules
 %attr(755,root,root) %{py3_sitedir}/_blueman.so
