@@ -162,16 +162,14 @@ rm -rf $RPM_BUILD_ROOT
 glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %service %{name}-mechanism restart
 %systemd_post %{name}-mechanism.service
-%systemd_user_post blueman-applet.service
-%systemd_user_post blueman-manager.service
+%systemd_user_post blueman-applet.service blueman-manager.service
 
 %preun
 if [ "$1" = "0" ]; then
         %service -q %{name}-mechanism stop
 fi
 %systemd_preun %{name}-mechanism.service
-%systemd_user_preun blueman-applet.service
-%systemd_user_preun blueman-manager.service
+%systemd_user_preun blueman-applet.service blueman-manager.service
 
 %postun
 %update_icon_cache hicolor
