@@ -7,7 +7,7 @@
 Summary:	Blueman - bluetooth management utility for GNOME
 Name:		blueman
 Version:	2.2.3
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -27,13 +27,13 @@ BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	python3-Cython
 BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.644
+BuildRequires:	rpmbuild(macros) >= 2.011
 BuildRequires:	systemd-units
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,preun,postun):	systemd-units >= 38
+Requires(post,preun,postun):	systemd-units >= 250.1
 Requires:	bluez >= 5.48
 Requires:	dbus >= 1.9.18
 Requires:	glib2 >= 1:2.32
@@ -42,6 +42,7 @@ Requires:	pango
 Requires:	python3 >= %py3_ver
 Requires:	python3-pycairo
 Requires:	python3-pygobject3 >= 3.27.2
+Requires:	systemd-units >= 250.1
 Suggests:	NetworkManager-libs
 Suggests:	iproute2
 Suggests:	libayatana-appindicator-gtk3
@@ -161,12 +162,16 @@ rm -rf $RPM_BUILD_ROOT
 glib-compile-schemas %{_datadir}/glib-2.0/schemas
 %service %{name}-mechanism restart
 %systemd_post %{name}-mechanism.service
+%systemd_user_post blueman-applet.service
+%systemd_user_post blueman-manager.service
 
 %preun
 if [ "$1" = "0" ]; then
         %service -q %{name}-mechanism stop
 fi
 %systemd_preun %{name}-mechanism.service
+%systemd_user_preun blueman-applet.service
+%systemd_user_preun blueman-manager.service
 
 %postun
 %update_icon_cache hicolor
