@@ -1,10 +1,12 @@
+#
 # Conditional build:
 %bcond_without	cinnamon	# build without nemo support
 %bcond_without	gnome		# build without nautilus support
 %bcond_without	mate		# build without caja support
 %bcond_without	xfce		# build without Thunar support
 
-Summary:	Blueman - bluetooth management utility for GNOME
+Summary:	Blueman - Bluetooth management utility for GNOME
+Summary(pl.UTF-8):	Blueman - narzędzie do zarządzania łącznością Bluetooth dla GNOME
 Name:		blueman
 Version:	2.2.4
 Release:	1
@@ -51,12 +53,11 @@ Suggests:	pulseaudio-hal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Blueman is a GTK+ bluetooth management utility for GNOME using bluez
-dbus backend. The aim is to create a full featured graphical bluetooth
+Blueman is a GTK+ Bluetooth management utility for GNOME using bluez
+DBus backend. The aim is to create a full featured graphical Bluetooth
 manager for Linux.
 
 Features:
-
 - Easy to use interface
 - Storing Favourite devices
 - Send files
@@ -71,9 +72,29 @@ Features:
 - Connect and receive connections from: audio, network, input and
   serial devices
 
+%description -l pl.UTF-8
+Blueman to opate na GTK+ narzędzie do zarządzania łącznością Bluetooth
+dla GNOME, wykorzystujące backend DBus bluez. Celem jest stworzenie w
+pełni funkcjonalnego graficznego zarządcy Bluetooth dla Linuksa.
+
+Możliwości:
+- łatwy w użyciu interfejs
+- przechowywanie ulubionych urządzeń
+- wysyłanie plików
+- przeglądanie plików na urządzeniach
+- wypisywanie wszystkich widocznych urządzeń
+- informacje o lokalnych/zdalnych urządzeniach
+- pokazywanie szybkości przesyłania i jakości połączenia
+- konfigurowanie urządzeń lokalnych
+- zarządzanie parowaniem
+- hostowanie/łączenie się z sieciami prywatnymi
+- podpinanie urządzeń do portów /dev/rfcomm, np. do połączeń GPRS
+- nawiązywanie i odbieranie połączeń z urządzeń: dźwiękowych,
+  sieciowych, wejściowych i szeregowych
+
 %package caja
 Summary:	Blueman plugin for Caja
-Summary(pl.UTF-8):	Wtyczka Blueman-a dla managera plików Caja
+Summary(pl.UTF-8):	Wtyczka Bluemana dla zarządcy plików Caja
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 Requires:	caja-python
@@ -82,11 +103,11 @@ Requires:	caja-python
 Blueman plugin for Caja.
 
 %description caja -l pl.UTF-8
-Wtyczka Blueman-a dla managera plików Caja.
+Wtyczka Bluemana dla zarządcy plików Caja.
 
 %package nautilus
 Summary:	Blueman plugin for Nautilus
-Summary(pl.UTF-8):	Wtyczka Blueman-a dla Nautilus-a
+Summary(pl.UTF-8):	Wtyczka Bluemana dla Nautilusa
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 Requires:	nautilus-python
@@ -95,11 +116,11 @@ Requires:	nautilus-python
 Blueman plugin for Nautilus.
 
 %description nautilus -l pl.UTF-8
-Wtyczka Blueman-a dla Nautilus-a.
+Wtyczka Bluemana dla Nautilusa.
 
 %package nemo
 Summary:	Blueman plugin for Nemo
-Summary(pl.UTF-8):	Wtyczka Blueman-a dla managera plików Nemo.
+Summary(pl.UTF-8):	Wtyczka Bluemana dla zarządcy plików Nemo
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 Requires:	cinnamon-nemo-python
@@ -108,11 +129,11 @@ Requires:	cinnamon-nemo-python
 Blueman plugin for Nautilus.
 
 %description nemo -l pl.UTF-8
-Wtyczka Blueman-a dla managera plików Nemo.
+Wtyczka Bluemana dla zarządcy plików Nemo.
 
 %package thunar
 Summary:	Blueman plugin for Thunar
-Summary(pl.UTF-8):	Wtyczka Blueman-a dla Thunar-a
+Summary(pl.UTF-8):	Wtyczka Bluemana dla Thunara
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 
@@ -120,7 +141,7 @@ Requires:	%{name} = %{version}
 Blueman plugin for Thunar.
 
 %description thunar -l pl.UTF-8
-Wtyczka Blueman-a dla Thunar-a.
+Wtyczka Bluemana dla Thunara.
 
 %prep
 %setup -q
