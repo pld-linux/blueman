@@ -33,7 +33,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,preun,postun):	systemd-units >= 250.1
+Requires(post,preun,postun):	systemd-units >= 1:250.1
 Requires:	bluez >= 5.48
 Requires:	dbus >= 1.9.18
 Requires:	glib2 >= 1:2.32
@@ -42,7 +42,7 @@ Requires:	pango
 Requires:	python3 >= %py3_ver
 Requires:	python3-pycairo
 Requires:	python3-pygobject3 >= 3.27.2
-Requires:	systemd-units >= 250.1
+Requires:	systemd-units >= 1:250.1
 Suggests:	NetworkManager-libs
 Suggests:	iproute2
 Suggests:	libayatana-appindicator-gtk3
