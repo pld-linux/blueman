@@ -151,6 +151,9 @@ Wtyczka Bluemana dla Thunara.
 %configure \
 	CYTHONEXEC=/usr/bin/cython3 \
 	NETWORKTOOLS=/sbin/ip \
+	am_cv_python_pyexecdir=%{py3_sitedir} \
+	am_cv_python_pythondir=%{py3_sitedir} \
+	am_cv_python_version=%{py3_ver} \
 	--disable-runtime-deps-check \
 	--disable-schemas-compile \
 	--disable-static \
