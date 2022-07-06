@@ -8,13 +8,12 @@
 Summary:	Blueman - Bluetooth management utility for GNOME
 Summary(pl.UTF-8):	Blueman - narzędzie do zarządzania łącznością Bluetooth dla GNOME
 Name:		blueman
-Version:	2.2.5
+Version:	2.3
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	59a73a5f8e75777d51eb23820187a016
-Patch0:		ayatana-indicator.patch
+# Source0-md5:	b15931ee020986c23312299f7aa49cd3
 URL:		https://github.com/blueman-project/blueman
 BuildRequires:	bluez-libs-devel >= 5.48
 %{?with_mate:BuildRequires:	caja-python-devel}
@@ -47,7 +46,6 @@ Requires:	python3-pygobject3 >= 3.27.2
 Requires:	systemd-units >= 1:250.1
 Suggests:	NetworkManager-libs
 Suggests:	iproute2
-Suggests:	libayatana-appindicator-gtk3
 Suggests:	pulseaudio-bluetooth
 Suggests:	pulseaudio-hal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -145,7 +143,6 @@ Wtyczka Bluemana dla Thunara.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__aclocal}
