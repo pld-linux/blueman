@@ -15,6 +15,8 @@ Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	b15931ee020986c23312299f7aa49cd3
 URL:		https://github.com/blueman-project/blueman
+BuildRequires:	autoconf >= 2.61
+BuildRequires:	automake
 BuildRequires:	bluez-libs-devel >= 5.48
 %{?with_mate:BuildRequires:	caja-python-devel}
 %{?with_cinnamon:BuildRequires:	cinnamon-nemo-python-devel}
@@ -145,8 +147,11 @@ Wtyczka Bluemana dla Thunara.
 %setup -q
 
 %build
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	CYTHONEXEC=/usr/bin/cython3 \
 	NETWORKTOOLS=/sbin/ip \
