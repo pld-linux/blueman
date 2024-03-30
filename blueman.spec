@@ -35,6 +35,7 @@ BuildRequires:	systemd-units
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	glib2 >= 1:2.32
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun,postun):	systemd-units >= 1:250.1
@@ -186,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %update_icon_cache hicolor
 %update_desktop_database_post
-glib-compile-schemas %{_datadir}/glib-2.0/schemas
+%glib_compile_schemas
 %service %{name}-mechanism restart
 %systemd_post %{name}-mechanism.service
 %systemd_user_post blueman-applet.service blueman-manager.service
@@ -201,7 +202,7 @@ fi
 %postun
 %update_icon_cache hicolor
 %update_desktop_database_postun
-glib-compile-schemas %{_datadir}/glib-2.0/schemas
+%glib_compile_schemas
 %systemd_reload
 
 %files -f %{name}.lang
