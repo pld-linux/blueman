@@ -8,12 +8,12 @@
 Summary:	Blueman - Bluetooth management utility for GNOME
 Summary(pl.UTF-8):	Blueman - narzędzie do zarządzania łącznością Bluetooth dla GNOME
 Name:		blueman
-Version:	2.3.5
+Version:	2.4
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	a76321bf0ab25f2941d6a60621e5faee
+# Source0-md5:	e86737f71ef88b292ec94d3c0a7b3478
 URL:		https://github.com/blueman-project/blueman
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.16.3
@@ -28,7 +28,7 @@ BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	polkit-devel
 BuildRequires:	python-pygobject3-common-devel >= 3.27.2
 BuildRequires:	python3-Cython
-BuildRequires:	python3-devel >= 1:3.6
+BuildRequires:	python3-devel >= 1:3.8
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.011
 BuildRequires:	systemd-units
@@ -40,7 +40,7 @@ Requires(post,preun,postun):	systemd-units >= 1:250.1
 Requires:	bluez >= 5.48
 Requires:	dbus >= 1.9.18
 Requires:	glib2 >= 1:2.32
-Requires:	gtk+3 >= 3.22
+Requires:	gtk+3 >= 3.24
 Requires:	pango
 Requires:	python3 >= %py3_ver
 Requires:	python3-pycairo
@@ -191,7 +191,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas
 
 %preun
 if [ "$1" = "0" ]; then
-        %service -q %{name}-mechanism stop
+	%service -q %{name}-mechanism stop
 fi
 %systemd_preun %{name}-mechanism.service
 %systemd_user_preun blueman-applet.service blueman-manager.service
