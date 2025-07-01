@@ -8,12 +8,12 @@
 Summary:	Blueman - Bluetooth management utility for GNOME
 Summary(pl.UTF-8):	Blueman - narzędzie do zarządzania łącznością Bluetooth dla GNOME
 Name:		blueman
-Version:	2.4.4
-Release:	4
+Version:	2.4.5
+Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/blueman-project/blueman/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	ffd285ad1a69bb9833ad8a9d15f339b9
+# Source0-md5:	19266c84fc02c410e1f68ce8af81b513
 URL:		https://github.com/blueman-project/blueman
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.16.3
