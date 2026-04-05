@@ -166,7 +166,9 @@ Wtyczka Bluemana dla Thunara.
 	%{__enable_disable cinnamon nemo-sendto} \
 	%{__enable_disable gnome nautilus-sendto} \
 	%{__enable_disable xfce thunar-sendto} \
-	--enable-settings-integration
+	--enable-settings-integration \
+	--with-systemdsystemunitdir=%{systemdunitdir} \
+	--with-systemduserunitdir=%{systemduserunitdir}
 
 %{__make}
 
