@@ -1,0 +1,211 @@
+From 2fe6da98c63f756d383037953edacf320dad559e Mon Sep 17 00:00:00 2001
+From: Sander Sweers <infirit@gmail.com>
+Date: Tue, 17 Mar 2026 11:10:57 +0100
+Subject: [PATCH] Check if GLibUnix is available
+
+---
+ blueman/main/Applet.py   | 12 ++++++++----
+ blueman/main/Manager.py  |  6 +++++-
+ blueman/main/Services.py |  1 +
+ blueman/main/Tray.py     |  7 +++++--
+ 4 files changed, 19 insertions(+), 7 deletions(-)
+
+diff --git a/blueman/main/Applet.py b/blueman/main/Applet.py
+index a709ace24..cdd91548f 100644
+--- a/blueman/main/Applet.py
++++ b/blueman/main/Applet.py
+@@ -1,7 +1,3 @@
+-import gi
+-gi.require_version("Gtk", "3.0")
+-
+-from gi.repository import Gio, GLib, Gtk
+ import logging
+ import signal
+ from typing import Any, cast
+@@ -21,6 +17,14 @@
+ from blueman.plugins.applet.StandardItems import StandardItems
+ from blueman.plugins.applet.StatusIcon import StatusIcon
+ 
++import gi
++gi.require_version("Gtk", "3.0")
++gi.require_version("GLibUnix", "2.0")
++
++from gi.repository import Gio
++from gi.repository import GLib
++from gi.repository import Gtk
++
+ 
+ class BluemanApplet(Gtk.Application):
+     def __init__(self) -> None:
+diff --git a/blueman/main/Manager.py b/blueman/main/Manager.py
+index 4e1213851..6e0413da8 100644
+--- a/blueman/main/Manager.py
++++ b/blueman/main/Manager.py
+@@ -31,7 +31,11 @@
+ import gi
+ gi.require_version("Gtk", "3.0")
+ gi.require_version("Gdk", "3.0")
+-from gi.repository import Gtk, Gio, Gdk, GLib
++gi.require_version("GLibUnix", "2.0")
++from gi.repository import Gtk
++from gi.repository import Gio
++from gi.repository import Gdk
++from gi.repository import GLib
+ 
+ 
+ class Blueman(Gtk.Application):
+diff --git a/blueman/main/Services.py b/blueman/main/Services.py
+index b2e0bb3ab..58e265fb1 100644
+--- a/blueman/main/Services.py
++++ b/blueman/main/Services.py
+@@ -11,6 +11,7 @@
+ 
+ import gi
+ gi.require_version("Gtk", "3.0")
++gi.require_version("GLibUnix", "2.0")
+ from gi.repository import Gtk
+ from gi.repository import GLib
+ from gi.repository import Gio
+diff --git a/blueman/main/Tray.py b/blueman/main/Tray.py
+index e7e85ed85..374f02e45 100644
+--- a/blueman/main/Tray.py
++++ b/blueman/main/Tray.py
+@@ -5,10 +5,13 @@
+ import signal
+ import sys
+ from blueman.main.DBusProxies import AppletService
+-from gi.repository import Gio, GLib
+-
+ from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
+ 
++import gi
++gi.require_version("GLibUnix", "2.0")
++from gi.repository import Gio
++from gi.repository import GLib
++
+ 
+ class BluemanTray(Gio.Application):
+     def __init__(self) -> None:
+From 53111ff6df4a36016fe14018dd726b4af87c3937 Mon Sep 17 00:00:00 2001
+From: Pierre Lejeune <superheron@gmail.com>
+Date: Mon, 23 Mar 2026 17:21:14 +0100
+Subject: [PATCH] Use GLibUnix.signal_source_new
+
+---
+ blueman/main/Adapter.py  | 5 +++--
+ blueman/main/Applet.py   | 4 ++--
+ blueman/main/Manager.py  | 3 ++-
+ blueman/main/Services.py | 4 ++--
+ blueman/main/Tray.py     | 3 ++-
+ 5 files changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/blueman/main/Adapter.py b/blueman/main/Adapter.py
+index e8a66ed48..84342af59 100644
+--- a/blueman/main/Adapter.py
++++ b/blueman/main/Adapter.py
+@@ -13,8 +13,9 @@
+ import gi
+ gi.require_version("Gtk", "3.0")
+ gi.require_version("Gdk", "3.0")
++gi.require_version("GLibUnix", "2.0")
+ gi.require_version("Pango", "1.0")
+-from gi.repository import Gtk, Gio, Gdk, GLib
++from gi.repository import Gtk, Gio, Gdk, GLibUnix
+ from gi.repository import Pango
+ 
+ 
+@@ -38,7 +39,7 @@ def do_quit(_: object) -> bool:
+             self.quit()
+             return False
+ 
+-        s = GLib.unix_signal_source_new(signal.SIGINT)
++        s = GLibUnix.signal_source_new(signal.SIGINT)
+         s.set_callback(do_quit)
+         s.attach()
+ 
+diff --git a/blueman/main/Applet.py b/blueman/main/Applet.py
+index cdd91548f..f4225e6b4 100644
+--- a/blueman/main/Applet.py
++++ b/blueman/main/Applet.py
+@@ -22,7 +22,7 @@
+ gi.require_version("GLibUnix", "2.0")
+ 
+ from gi.repository import Gio
+-from gi.repository import GLib
++from gi.repository import GLibUnix
+ from gi.repository import Gtk
+ 
+ 
+@@ -37,7 +37,7 @@ def do_quit(_: object) -> bool:
+             self.quit()
+             return False
+ 
+-        s = GLib.unix_signal_source_new(signal.SIGINT)
++        s = GLibUnix.signal_source_new(signal.SIGINT)
+         s.set_callback(do_quit)
+         s.attach()
+ 
+diff --git a/blueman/main/Manager.py b/blueman/main/Manager.py
+index 6e0413da8..04c6fbd04 100644
+--- a/blueman/main/Manager.py
++++ b/blueman/main/Manager.py
+@@ -36,6 +36,7 @@
+ from gi.repository import Gio
+ from gi.repository import Gdk
+ from gi.repository import GLib
++from gi.repository import GLibUnix
+ 
+ 
+ class Blueman(Gtk.Application):
+@@ -51,7 +52,7 @@ def do_quit(_: object) -> bool:
+             self.quit()
+             return False
+ 
+-        s = GLib.unix_signal_source_new(signal.SIGINT)
++        s = GLibUnix.signal_source_new(signal.SIGINT)
+         s.set_callback(do_quit)
+         s.attach()
+ 
+diff --git a/blueman/main/Services.py b/blueman/main/Services.py
+index 58e265fb1..74491e0c8 100644
+--- a/blueman/main/Services.py
++++ b/blueman/main/Services.py
+@@ -13,7 +13,7 @@
+ gi.require_version("Gtk", "3.0")
+ gi.require_version("GLibUnix", "2.0")
+ from gi.repository import Gtk
+-from gi.repository import GLib
++from gi.repository import GLibUnix
+ from gi.repository import Gio
+ 
+ 
+@@ -30,7 +30,7 @@ def do_quit(_: object) -> bool:
+             self.quit()
+             return False
+ 
+-        s = GLib.unix_signal_source_new(signal.SIGINT)
++        s = GLibUnix.signal_source_new(signal.SIGINT)
+         s.set_callback(do_quit)
+         s.attach()
+ 
+diff --git a/blueman/main/Tray.py b/blueman/main/Tray.py
+index 374f02e45..91df6e148 100644
+--- a/blueman/main/Tray.py
++++ b/blueman/main/Tray.py
+@@ -11,6 +11,7 @@
+ gi.require_version("GLibUnix", "2.0")
+ from gi.repository import Gio
+ from gi.repository import GLib
++from gi.repository import GLibUnix
+ 
+ 
+ class BluemanTray(Gio.Application):
+@@ -24,7 +25,7 @@ def do_quit(_: object) -> bool:
+             self.quit()
+             return False
+ 
+-        s = GLib.unix_signal_source_new(signal.SIGINT)
++        s = GLibUnix.signal_source_new(signal.SIGINT)
+         s.set_callback(do_quit)
+         s.attach()
+ 
